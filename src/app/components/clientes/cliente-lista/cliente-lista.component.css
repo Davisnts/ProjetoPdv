@@ -1,16 +1,3 @@
 .box.collapsed-box .box-body, .box.collapsed-box .box-footer {
   display: none;
 }
-.full-width-dialog{
-  maxWidth: '100vw',
-}
-
-::ng-deep {
-  .cdk-overlay-pane {
-      max-width: 100vw !important;
-      max-height: 100vh !important;
-  }
-}
-.cdk-overlay-pane.mat-mdc-dialog-panel {
-  max-width: 100% !important;
-  }

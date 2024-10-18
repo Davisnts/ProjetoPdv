@@ -11,7 +11,8 @@ import { VendasListaComponent } from './components/vendas/vendas-lista/vendas-li
 import { ClienteDetalharComponent } from './components/clientes/cliente-detalhar/cliente-detalhar.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -27,10 +28,18 @@ import { MatDialogModule } from '@angular/material/dialog';
     NgbModule,
     FontAwesomeModule,
     MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     provideAnimationsAsync()
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports:[
+    FormsModule,
+    ReactiveFormsModule
+  ]
+
 })
 export class AppModule { }

@@ -3,6 +3,38 @@
   <h1 mat-dialog-title style="float: left">{{data.titulo}}</h1>
   <span style="float: right" class="m-2 p-1" [mat-dialog-close]>X</span>
 </div>
-<form>
+<div class="card rounded shadow-sm mx-2 p-3">
+  <form [formGroup]="form">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6 p-1">
+          <label for="inputTema" class="form-label">Nome</label>
+          <input type="text" class="form-control" formControlName="nome" placeholder="Nome do cliente" />
+        </div>
+        <div class="col-md-6 p-1">
+          <label for="inputTema" class="form-label">Email</label>
+          <input type="email" class="form-control" formControlName="email" placeholder="Email@Email" />
+        </div>
+        <div class="col-md-3 p-1">
+          <label for="inputTema" class="form-label">CPF</label>
+          <input type="number" class="form-control" formControlName="cpf" placeholder="000.000.000-00" />
+        </div>
+        <div class="col-md-4 p-1">
+          <label for="inputTema" class="form-label">Limite De Credito</label>
+          <input type="number" class="form-control" formControlName="limiteCredito" placeholder="000.000.000-00" />
+        </div>
+        <div class="col-md-3 p-1">
+          <label for="inputTema" class="form-label">Data de Nascimento</label>
+          <input type="date" max="01.01.2099"class="form-control" formControlName="dataNascimento" placeholder="01/10/2024" />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="m-auto p-3">
+  <button class="btn btn-primary"
+          (click)=(utilService.validarFormulario(campos,form))>
+    &nbsp;Salvar Alterações</button>
+</div>
 
-</form>
+
