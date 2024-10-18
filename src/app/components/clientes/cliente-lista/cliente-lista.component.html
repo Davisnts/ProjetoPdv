@@ -1,0 +1,31 @@
+
+<div class="container card m-auto my-3">
+  <div [class]="'box ' + statusBox">
+    <div class="box-header with-border text-center" (click)="alterarStatusBox()">
+      <h3 class="box-title">Filtro
+        <fa-icon [icon]="statusBox == '' ? caretup : carretDown"></fa-icon>
+      </h3>
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool">
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body my-2">
+      <div class="row">
+        <div class="col-md-3">
+          <label for="inputLocal" class="form-label">CPF</label>
+          <input type="text" class="form-control" placeholder="000.000.000-00" />
+        </div>
+        <div class="col-md-5">
+          <label for="inputLocal" class="form-label">Nome</label>
+          <input type="text" class="form-control" placeholder="Nome do Cliente" />
+        </div>
+        <div class="col d-flex justify-content-end mt-2">
+          <button type="button" class="btn btn-primary m-2 ">Pesquisar <fa-icon [icon]="faSearch"> </fa-icon></button>
+          <button type="button" class="btn btn-primary m-2" (click)="cadastrarCliente()">Cadastrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
