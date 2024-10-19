@@ -13,6 +13,8 @@ constructor(private toastr: ToastrService) { }
 validarFormulario(campos : any[],formulario : any){
   let mensagemErro = "";
   let qtdErros = 0;
+  console.log(formulario);
+
   campos.forEach(campo => {
     let campoFormulario = formulario.get(campo.campoNome);
     campo.validators.forEach((validator: any )  =>{
@@ -30,5 +32,15 @@ validarFormulario(campos : any[],formulario : any){
     });
   }
 }
+retornaValidators(campo : any ,formulario : any){
+  let campoFormulario  = formulario.get(campo.campoNome);
+  campo.validators.forEach((validator : any ) =>{
+    if(campoFormulario.hasError(validator.nome)){
+      console.log(validator.mensagemErro);
+    }
+  })
+}
+
+// retornaValidators(u,i){return i.find(v=>v.campoNome==u).validators}
 
 }
