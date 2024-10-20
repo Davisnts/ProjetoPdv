@@ -1,3 +1,7 @@
+@import 'ngx-toastr/toastr';
+
+
+
 .box {
   position: relative;
   border-radius: 3px;
@@ -334,16 +338,3 @@
   font-size: 12px;
 }
 
-@import 'ngx-toastr/toastr';
-
-
-@import 'ngx-toastr/toastr-bs4-alert';
-
-
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/variables';
-@import 'bootstrap/scss/mixins';
-
-@import 'ngx-toastr/toastr-bs4-alert';
-
-@import 'ngx-toastr/toastr-bs5-alert';
