@@ -1,10 +1,10 @@
 
-<div class="container card m-auto my-3">
-  <div [class]="'box ' + statusBox">
+<div class="container">
+  <div [class]="'box card m-auto p-2 my-3 ' + statusBox">
     <div class="box-header with-border text-center" (click)="alterarStatusBox()">
-      <h3 class="box-title">Filtro
+      <h1 class="box-title">Filtro
         <fa-icon [icon]="statusBox == '' ? caretup : carretDown"></fa-icon>
-      </h3>
+      </h1>
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool">
           <i class="fa fa-minus"></i>
@@ -15,17 +15,46 @@
       <div class="row">
         <div class="col-md-3">
           <label for="inputLocal" class="form-label">CPF</label>
-          <input type="text" class="form-control" placeholder="000.000.000-00" />
+          <input type="text" [mask]="getMaskCPF()" [(ngModel)]="filtroCliente.cpf" class="form-control" placeholder="000.000.000-00" />
         </div>
         <div class="col-md-5">
           <label for="inputLocal" class="form-label">Nome</label>
-          <input type="text" class="form-control" placeholder="Nome do Cliente" />
+          <input type="text" [(ngModel)]="filtroCliente.nome" class="form-control" placeholder="Nome do Cliente" />
         </div>
         <div class="col d-flex justify-content-end mt-2">
-          <button type="button" class="btn btn-primary m-2 ">Pesquisar <fa-icon [icon]="faSearch"> </fa-icon></button>
+          <button type="button" class="btn btn-primary m-2" (click)="buscarClientes()">Pesquisar <fa-icon [icon]="faSearch"> </fa-icon></button>
           <button type="button" class="btn btn-primary m-2" (click)="cadastrarCliente()">Cadastrar</button>
         </div>
       </div>
     </div>
+  </div>
+  <div class="card p-1 mt-2">
+    <table class="table table-striped table-hover"  *ngIf="clientes && clientes.length > 0">
+      <thead class="thead-light ">
+        <th>Nome</th>
+        <th>cpf</th>
+        <th>Email</th>
+        <th>Limite de Credito</th>
+        <th>Ações</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of clientes">
+          <td>{{cliente.nome}}</td>
+          <td>{{cliente.cpf | mask: '000.000.000-09'}}</td>
+          <td>{{cliente.email}}</td>
+          <td>{{cliente.limiteCredito}}</td>
+          <td>
+            <button  mat-button [matMenuTriggerFor]="menu" type="button" class="btn btn-sm btn-primary">
+              <fa-icon [icon]="faEllipsis"></fa-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="detalharCliente(cliente)" >Editar</button>
+              <button mat-menu-item (click)="abrirModalExcluirCliente(cliente.id)">Excluir</button>
+            </mat-menu>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 class="text-center" *ngIf="!clientes || clientes.length == 0" >Nenhum registro encontrado</h3>
   </div>
 </div>

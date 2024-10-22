@@ -13,6 +13,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { ClienteService } from './services/clientes/Cliente.service';
+import { provideHttpClient } from '@angular/common/http';
+import {MatMenuModule} from '@angular/material/menu';
+import { ModalConfirmaçãoComponent } from './shared/utils/components/ModalConfirmação/ModalConfirmação.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { DpDatePickerModule } from 'ng2-date-picker';
 
 @NgModule({
   declarations: [
@@ -21,6 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
     ClienteListaComponent,
     VendasListaComponent,
     ClienteDetalharComponent,
+    ModalConfirmaçãoComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,16 +37,22 @@ import { ToastrModule } from 'ngx-toastr';
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot()
+    MatMenuModule,
+    ToastrModule.forRoot(),
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    provideHttpClient(),
+    provideNgxMask()
   ],
   bootstrap: [AppComponent],
   exports:[
     FormsModule,
     ReactiveFormsModule
   ]
+
 
 })
 export class AppModule { }

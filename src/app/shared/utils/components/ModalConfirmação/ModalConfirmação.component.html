@@ -1,0 +1,17 @@
+<div class="modal d-block">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{titulo}}</h5>
+        <button type="button" class="btn-close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <span class="texto-mensagem"> <fa-icon [icon]="faCircleExclamantion"></fa-icon> {{mensagem}}</span>
+      </div>
+      <div class="modal-footer justify-content-between">
+          <button (click)="cancelar()" type="button" class="btn btn-danger float-left">Não</button>
+          <button (click)="confirmar()" type="button" class="btn btn-primary float-right">Sim</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,8 +17,10 @@ validarFormulario(campos : any[],formulario : any){
 
   campos.forEach(campo => {
     let campoFormulario = formulario.get(campo.campoNome);
+    console.log(campoFormulario);
     campo.validators.forEach((validator: any )  =>{
       if(campoFormulario.hasError(validator.nome)){
+        campoFormulario.markAsTouched();
         mensagemErro += `${validator.mensagemErro}<br/>`;
         qtdErros++;
       }
@@ -30,17 +32,15 @@ validarFormulario(campos : any[],formulario : any){
       timeOut: 3000,
       enableHtml: true,
     });
+    return false;
+  }
+  else{
+    return true
   }
 }
-retornaValidators(campo : any ,formulario : any){
-  let campoFormulario  = formulario.get(campo.campoNome);
-  campo.validators.forEach((validator : any ) =>{
-    if(campoFormulario.hasError(validator.nome)){
-      console.log(validator.mensagemErro);
-    }
-  })
-}
 
-// retornaValidators(u,i){return i.find(v=>v.campoNome==u).validators}
+retornaValidators(campo : string,campos : any[]){
+  return campos.find(c => c.campoNome == campo).validators;
+}
 
 }

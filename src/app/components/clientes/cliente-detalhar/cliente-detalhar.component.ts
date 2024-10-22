@@ -1,7 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UtilsService } from '../../../shared/utils/utils.service';
+import { ClienteService } from '../../../services/clientes/Cliente.service';
+import { ToastrService } from 'ngx-toastr';
+import { Cliente } from '../../../models/Cliente';
 
 @Component({
   selector: 'app-cliente-detalhar',
@@ -11,8 +14,46 @@ import { UtilsService } from '../../../shared/utils/utils.service';
 export class ClienteDetalharComponent implements OnInit {
 
   data: any;
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
+  datePickerConfig = {
+    firstDayOfWeek: 'su',
+    monthFormat: 'MMM, YYYY',
+    disableKeypress: false,
+    allowMultiSelect: false,
+    closeOnSelect: undefined,
+    closeOnSelectDelay: 100,
+    onOpenDelay: 0,
+    weekDayFormat: 'ddd',
+    appendTo: document.body,
+    drops: 'down',
+    opens: 'right',
+    showNearMonthDays: true,
+    showWeekNumbers: false,
+    enableMonthSelector: true,
+    format: "YYYY-MM-DD HH:mm",
+    yearFormat: 'YYYY',
+    showGoToCurrent: true,
+    dayBtnFormat: 'DD',
+    monthBtnFormat: 'MMM',
+    hours12Format: 'hh',
+    hours24Format: 'HH',
+    meridiemFormat: 'A',
+    minutesFormat: 'mm',
+    minutesInterval: 1,
+    secondsFormat: 'ss',
+    secondsInterval: 1,
+    showSeconds: false,
+    showTwentyFourHours: true,
+    timeSeparator: ':',
+    multipleYearsNavigateBy: 10,
+    showMultipleYearsNavigation: false,
+    locale: 'zh-cn',
+    // min:'2017-08-29 15:50',
+    // minTime:'2017-08-29 15:50'
+  };
+
+  modo = "CADASTRAR";
   campos = [
     {
       "campoNome": "nome",
@@ -31,6 +72,20 @@ export class ClienteDetalharComponent implements OnInit {
         {
           "nome": "required",
           "mensagemErro": "Cpf é Obrigatório."
+        },
+        {
+          "nome": "mask",
+          "mensagemErro": "Cpf Inválido."
+        }
+      ]
+    },
+    {
+      "campoNome": "limiteCredito",
+      "campoTitulo": "limiteCredito:",
+      "validators": [
+        {
+          "nome": "required",
+          "mensagemErro": "Limite de credito é Obrigatório."
         }
       ]
     },
@@ -41,6 +96,10 @@ export class ClienteDetalharComponent implements OnInit {
         {
           "nome": "required",
           "mensagemErro": "Email é Obrigatório."
+        },
+        {
+          "nome": "email",
+          "mensagemErro": "Email Invalido."
         }
       ]
     },
@@ -51,23 +110,26 @@ export class ClienteDetalharComponent implements OnInit {
         {
           "nome": "required",
           "mensagemErro": "Data Nascimento é Obrigatória."
-        },
-        {
-          "nome": "format",
-          "mensagemErro": "Data Nascimento é Invalida."
         }
       ]
     },
   ]
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) data: any,
+    public dialog:MatDialogRef<any>,
     public utilService: UtilsService,
+    public clienteService: ClienteService,
+    private toastr: ToastrService
   )
   {
     this.data = data
     this.iniciarFormulario()
+    if(data.cliente){
+      this.carregarCliente(data.cliente);
+      this.modo = "EDITAR";
+    }
   }
 
   ngOnInit() {
@@ -78,17 +140,57 @@ export class ClienteDetalharComponent implements OnInit {
 
   iniciarFormulario(){
     this.form = this.fb.group({
-      id:[0],
+      id:[null],
       nome:['',Validators.required],
       cpf:['',Validators.required],
       email:['',[Validators.required,Validators.email]],
       limiteCredito:['',Validators.required],
-      dataNascimento:['',Validators.required],
+      dataNascimento:[''],
     })
   }
 
 
-  carregarCliente(){
+  carregarCliente(cliente: Cliente){
+      this.form.patchValue(cliente);
+  }
 
+  cadastrarCliente(){
+
+  }
+
+  salvarAlteracoes(){
+    let cliente = this.form.value;
+    if(this.modo == "EDITAR"){
+      this.clienteService.editarCliente(cliente,cliente.id).subscribe({
+        next:()=>{
+          this.toastr.success("Cliente editado com sucesso");
+          this.dialog.close();
+          this.clienteService.carregarClientes.emit();
+        },
+        error:(error)=>{
+          this.toastr.error(error.error,"Falha ao tentar editar cliente!");
+        }
+      })
+    }
+    else if(this.modo == "CADASTRAR"){
+      console.log(cliente);
+      this.clienteService.cadastrarCliente(cliente).subscribe({
+        next:()=>{
+          this.toastr.success("Cliente cadastrado com sucesso!");
+          this.dialog.close();
+        },
+        error:(error) => {
+          this.toastr.error(error.error,"Falha ao tentar cadastrar cliente!")
+        }
+      })
+    }
+  }
+
+  retornaLog(t: any){
+    console.log(t);
+  }
+
+  getMaskCPF(){
+    return '000.000.000-09';
   }
 }

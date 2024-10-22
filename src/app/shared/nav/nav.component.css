@@ -6,9 +6,22 @@
 }
 
 .navbar-nav > .active > a {
-  color: #c5c5c5;
+  color: #424242;
+  background: #FFF;
+  border-radius: 15px;
+}
+.navbar-nav a{
+  border-radius: 10px;
+  transition: 300ms ease-in-out;
+}
+
+.navbar-nav :hover{
+  color: #424242;
+  background: #FFF;
+  border-radius: 15px;
+  scale: 1.025;
 }
 
 .bg{
-  background: #81898c;
+  background: #424242;
 }
