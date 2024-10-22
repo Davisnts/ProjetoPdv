@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ModalConfirmaçãoComponent } from '../../../shared/utils/components/ModalConfirmação/ModalConfirmação.component';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FiltroClientes } from '../../../models/FiltroClientes';
+import { ModalTemplateComponent } from '../../../shared/utils/components/ModalTemplate/ModalTemplate.component';
 
 @Component({
   selector: 'app-cliente-lista',
@@ -71,14 +72,14 @@ export class ClienteListaComponent implements OnInit {
   };
 
   cadastrarCliente(){
-    this.dialog.open(ClienteDetalharComponent,
+    this.dialog.open(ModalTemplateComponent,
       {
-        maxWidth: '100vw',
         height: '50%',
-        width: '50%',
+        width: '60%',
         panelClass: 'full-screen-modal',
         data:{
-          titulo: "Cadastrar Cliente",
+          component: ClienteDetalharComponent,
+          tituloModal: "Cadastrar Cliente",
         }
       }).afterClosed().subscribe(
         () => {
@@ -88,13 +89,14 @@ export class ClienteListaComponent implements OnInit {
   }
 
   detalharCliente(cliente:Cliente){
-    this.dialog.open(ClienteDetalharComponent,
+    this.dialog.open(ModalTemplateComponent,
       {
         height: '50%',
-        width: '50%',
+        width: '60%',
         panelClass: 'full-screen-modal',
         data:{
-          titulo: "Editar/Detalhar Cliente",
+          component: ClienteDetalharComponent,
+          tituloModal: "Editar - Detalhar Cliente",
           cliente: cliente
         }
       });

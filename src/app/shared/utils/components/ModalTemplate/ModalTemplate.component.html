@@ -1,0 +1,5 @@
+<h2 mat-dialog-title>{{ data.tituloModal }} <span class="float-end p-2" style="cursor: pointer;" mat-button (click)="fechar()">x </span></h2>
+
+<mat-dialog-content>
+  <ng-container *ngComponentOutlet="data.component"></ng-container>
+</mat-dialog-content>

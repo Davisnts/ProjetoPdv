@@ -1,0 +1,10 @@
+.box-vendas{
+  border-radius: 15px;
+  border: 1px solid #d2d6de;
+  border-top: 3px solid #d2d6de;
+  box-shadow: 0 1px 1px #0000001a;
+  background: #fff;
+}
+.box-vendas .box-title b{
+  font-size: 2rem;
+}

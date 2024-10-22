@@ -2,9 +2,9 @@
 <div class="container">
   <div [class]="'box card m-auto p-2 my-3 ' + statusBox">
     <div class="box-header with-border text-center" (click)="alterarStatusBox()">
-      <h1 class="box-title">Filtro
+      <b class="box-title">Filtro
         <fa-icon [icon]="statusBox == '' ? caretup : carretDown"></fa-icon>
-      </h1>
+      </b>
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool">
           <i class="fa fa-minus"></i>
@@ -42,7 +42,7 @@
           <td>{{cliente.nome}}</td>
           <td>{{cliente.cpf | mask: '000.000.000-09'}}</td>
           <td>{{cliente.email}}</td>
-          <td>{{cliente.limiteCredito}}</td>
+          <td >{{cliente.limiteCredito  | currency : 'BRL'}}</td>
           <td>
             <button  mat-button [matMenuTriggerFor]="menu" type="button" class="btn btn-sm btn-primary">
               <fa-icon [icon]="faEllipsis"></fa-icon>

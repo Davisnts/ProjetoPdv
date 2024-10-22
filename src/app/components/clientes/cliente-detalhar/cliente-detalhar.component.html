@@ -1,57 +1,53 @@
 
-<div>
-  <h1 mat-dialog-title style="float: left">{{data.titulo}}</h1>
-  <span style="float: right" class="m-2 p-1" [mat-dialog-close]>X</span>
-</div>
-<div class="card rounded shadow-sm mx-2 p-3">
-  <form [formGroup]="form">
-    <div class="form-group">
-      <div class="row p-1">
-        <div class="col-md-6">
-          <label for="inputTema" class="form-label">Nome</label>
-          <input type="text" class="form-control" formControlName="nome" placeholder="Nome do cliente" required/>
-          <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('nome', campos)">
-            <span *ngIf="form.get('nome')?.hasError(validator.nome) && form.get('nome')?.touched"> {{ validator.mensagemErro }}</span>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label for="inputTema" class="form-label">Email</label>
-          <input type="email" class="form-control" formControlName="email" placeholder="Email@Email" required />
-          <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('email', campos)">
-            <span *ngIf="form.get('email')?.hasError(validator.nome) && form.get('email')?.touched"> {{ validator.mensagemErro }}</span>
-          </div>
-        </div>
-      </div>
+<div class="d-grid">
+  <div class="card rounded shadow-sm mx-2 p-3">
+    <form [formGroup]="form">
+      <div class="form-group">
         <div class="row p-1">
-        <div class="col-md-3">
-          <label for="inputTema" class="form-label">CPF</label>
-          <input type="string" [mask]="getMaskCPF()" class="form-control" formControlName="cpf" placeholder="000.000.000-00" required />
-          <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('cpf', campos)">
-            <span *ngIf="form.get('cpf')?.hasError(validator.nome) && form.get('cpf')?.touched"> {{ validator.mensagemErro }}</span>
+          <div class="col-md-6">
+            <label for="inputTema" class="form-label">Nome</label>
+            <input type="text" class="form-control" formControlName="nome" placeholder="Nome do cliente" required/>
+            <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('nome', campos)">
+              <span *ngIf="form.get('nome')?.hasError(validator.nome) && form.get('nome')?.touched"> {{ validator.mensagemErro }}</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputTema" class="form-label">Email</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="Email@Email" required />
+            <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('email', campos)">
+              <span *ngIf="form.get('email')?.hasError(validator.nome) && form.get('email')?.touched"> {{ validator.mensagemErro }}</span>
+            </div>
           </div>
         </div>
-        <div class="col-md-4 ">
-          <label for="inputTema" class="form-label">Limite De Credito</label>
-          <input type="number" class="form-control" formControlName="limiteCredito" placeholder="000.000.000-00" required />
-          <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('limiteCredito', campos)">
-            <span *ngIf="form.get('limiteCredito')?.hasError(validator.nome) && form.get('limiteCredito')?.touched"> {{ validator.mensagemErro }}</span>
+          <div class="row p-1">
+          <div class="col-md-3">
+            <label for="inputTema" class="form-label">CPF</label>
+            <input type="string" [mask]="getMaskCPF()" class="form-control" formControlName="cpf" placeholder="000.000.000-00" required />
+            <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('cpf', campos)">
+              <span *ngIf="form.get('cpf')?.hasError(validator.nome) && form.get('cpf')?.touched"> {{ validator.mensagemErro }}</span>
+            </div>
           </div>
-        </div>
-        <div class="col-md-3 ">
-          <label for="inputTema" class="form-label">Data de Nascimento</label>
-          <input type="date" max="01.01.2099"class="form-control" formControlName="dataNascimento" placeholder="01/10/2024" required/>
-          <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('dataNascimento', campos)">
-            <span *ngIf="form.get('dataNascimento')?.hasError(validator.nome) && form.get('dataNascimento')?.touched"> {{ validator.mensagemErro }}</span>
+          <div class="col-md-4 ">
+            <label for="inputTema" class="form-label">Limite De Credito</label>
+            <input type="string" class="form-control" formControlName="limiteCredito" currencyMask [options]="{ allowNegative: false , max: 9999.99}" placeholder="R$ 100,00" required />
+            <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('limiteCredito', campos)">
+              <span *ngIf="form.get('limiteCredito')?.hasError(validator.nome) && form.get('limiteCredito')?.touched"> {{ validator.mensagemErro }}</span>
+            </div>
+          </div>
+          <div class="col-md-3 ">
+            <label for="inputTema" class="form-label">Data de Nascimento</label>
+            <input type="date" max="01.01.2099"class="form-control" formControlName="dataNascimento" placeholder="01/10/2024" required/>
+            <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('dataNascimento', campos)">
+              <span *ngIf="form.get('dataNascimento')?.hasError(validator.nome) && form.get('dataNascimento')?.touched"> {{ validator.mensagemErro }}</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
+  <div class="m-2 p-3">
+    <button class="btn btn-primary float-end"
+            (click)="(utilService.validarFormulario(campos,form) ? salvarAlteracoes() : '')">
+      &nbsp;Salvar Alterações</button>
+  </div>
 </div>
-<div class="m-auto p-3">
-  <button class="btn btn-primary"
-          (click)="(utilService.validarFormulario(campos,form) ? salvarAlteracoes() : '')">
-    &nbsp;Salvar Alterações</button>
-</div>
-
-

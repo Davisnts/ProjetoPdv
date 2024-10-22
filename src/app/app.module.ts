@@ -13,12 +13,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { ClienteService } from './services/clientes/Cliente.service';
 import { provideHttpClient } from '@angular/common/http';
 import {MatMenuModule} from '@angular/material/menu';
 import { ModalConfirmaçãoComponent } from './shared/utils/components/ModalConfirmação/ModalConfirmação.component';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-import { DpDatePickerModule } from 'ng2-date-picker';
+import { ModalTemplateComponent } from './shared/utils/components/ModalTemplate/ModalTemplate.component';
+import { provideEnvironmentNgxCurrency, NgxCurrencyInputMode, NgxCurrencyDirective } from 'ngx-currency';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { DpDatePickerModule } from 'ng2-date-picker';
     VendasListaComponent,
     ClienteDetalharComponent,
     ModalConfirmaçãoComponent,
+    ModalTemplateComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,11 +43,27 @@ import { DpDatePickerModule } from 'ng2-date-picker';
     ToastrModule.forRoot(),
     NgxMaskDirective,
     NgxMaskPipe,
+    NgxCurrencyDirective
   ],
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(),
-    provideNgxMask()
+    provideNgxMask(),
+    provideEnvironmentNgxCurrency({
+      align: "right",
+      allowNegative: true,
+      allowZero: true,
+      decimal: ",",
+      precision: 2,
+      prefix: "R$ ",
+      suffix: "",
+      thousands: ".",
+      nullable: true,
+      min: null,
+      max: null,
+      inputMode: NgxCurrencyInputMode.Financial,
+    }),
+
   ],
   bootstrap: [AppComponent],
   exports:[
