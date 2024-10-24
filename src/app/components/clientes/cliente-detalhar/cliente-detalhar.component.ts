@@ -16,42 +16,6 @@ export class ClienteDetalharComponent implements OnInit {
   data: any;
   form!: UntypedFormGroup;
 
-  datePickerConfig = {
-    firstDayOfWeek: 'su',
-    monthFormat: 'MMM, YYYY',
-    disableKeypress: false,
-    allowMultiSelect: false,
-    closeOnSelect: undefined,
-    closeOnSelectDelay: 100,
-    onOpenDelay: 0,
-    weekDayFormat: 'ddd',
-    appendTo: document.body,
-    drops: 'down',
-    opens: 'right',
-    showNearMonthDays: true,
-    showWeekNumbers: false,
-    enableMonthSelector: true,
-    format: "YYYY-MM-DD HH:mm",
-    yearFormat: 'YYYY',
-    showGoToCurrent: true,
-    dayBtnFormat: 'DD',
-    monthBtnFormat: 'MMM',
-    hours12Format: 'hh',
-    hours24Format: 'HH',
-    meridiemFormat: 'A',
-    minutesFormat: 'mm',
-    minutesInterval: 1,
-    secondsFormat: 'ss',
-    secondsInterval: 1,
-    showSeconds: false,
-    showTwentyFourHours: true,
-    timeSeparator: ':',
-    multipleYearsNavigateBy: 10,
-    showMultipleYearsNavigation: false,
-    locale: 'zh-cn',
-    // min:'2017-08-29 15:50',
-    // minTime:'2017-08-29 15:50'
-  };
 
   modo = "CADASTRAR";
   campos = [

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgSelectConfig } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,9 @@ export class AppComponent {
     drops: 'up',
     format: 'dd/MM/yyyy'
   }
+  constructor(private config: NgSelectConfig) {
+    this.config.notFoundText = 'Nenhum Item encontrado';
+    this.config.appendTo = 'body';
+    this.config.bindValue = 'value';
+}
 }

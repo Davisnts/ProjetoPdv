@@ -3,7 +3,11 @@
     <a href="" class="navbar-brand" routerLink="" routerLinkActive="active">
       <fa-icon [icon]="faHome"></fa-icon>
     </a>
-    <div class="collapse navbar-collapse" id="navbarNav">
+      <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed" id="navbarNav">
       <ul class="navbar-nav me-auto gap-3 p-2">
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="vendas">

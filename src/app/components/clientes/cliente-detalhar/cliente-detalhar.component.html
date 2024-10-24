@@ -29,7 +29,7 @@
           </div>
           <div class="col-md-4 ">
             <label for="inputTema" class="form-label">Limite De Credito</label>
-            <input type="string" class="form-control" formControlName="limiteCredito" currencyMask [options]="{ allowNegative: false , max: 9999.99}" placeholder="R$ 100,00" required />
+            <input class="form-control" formControlName="limiteCredito" currencyMask [options]="{ allowNegative: false , max: 9999.99}" placeholder="R$ 100,00" required />
             <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('limiteCredito', campos)">
               <span *ngIf="form.get('limiteCredito')?.hasError(validator.nome) && form.get('limiteCredito')?.touched"> {{ validator.mensagemErro }}</span>
             </div>

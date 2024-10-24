@@ -3,9 +3,36 @@
     <div class="box-title text-center">
       <b>Vendas</b>
       <hr>
-      <button class="btn btn-primary m-2 float-end">
+      <button (click)="cadastrarVenda()" class="btn btn-primary m-2 float-end">
         Nova venda
       </button>
     </div>
+  </div>
+  <div class="card p-1 mt-2">
+    <table class="table table-striped table-hover"  *ngIf="vendas && vendas.length > 0">
+      <thead class="thead-light ">
+        <th>Cliente</th>
+        <th>Data Venda</th>
+        <th>Total</th>
+        <th>Ações</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venda of vendas">
+          <td>{{venda.cliente.nome}}</td>
+          <td>{{venda.dataVenda}}</td>
+          <td>{{venda.totalVenda}}</td>
+          <td>
+            <button  mat-button [matMenuTriggerFor]="menu" type="button" class="btn btn-sm btn-primary">
+              <fa-icon [icon]="faEllipsis"></fa-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="editarVenda(venda)" >Editar</button>
+              <button mat-menu-item (click)="abrirModalExcluirVenda(venda.id)">Excluir</button>
+            </mat-menu>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 class="text-center" *ngIf="!vendas || vendas.length == 0" >Nenhum registro encontrado</h3>
   </div>
 </div>

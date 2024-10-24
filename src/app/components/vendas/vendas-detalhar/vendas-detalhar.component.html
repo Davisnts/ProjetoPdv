@@ -1,3 +1,114 @@
-<p>
-  vendas-detalhar works!
-</p>
+<div class="d-grid">
+  <div class="card rounded shadow-sm mx-2 p-3">
+    <form [formGroup]="form">
+      <div class="form-group row">
+        <div class="col-md-4">
+          <label>Cliente</label>
+          <ng-select bindValue="id" bindLabel="nome" clearable="false" formControlName="clienteId" [items]="clientes" required></ng-select>
+          <div class="invalid-feedback d-block">
+            <span *ngFor="let validator of utilService.retornaValidators('clienteId', campos)">
+              <span *ngIf="form.get('clienteId')?.hasError(validator.nome) && form.get('clienteId')?.touched">
+                {{ validator.mensagemErro }}
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <div class="col-md-3 ">
+            <label for="inputTema" class="form-label">Data Venda</label>
+            <input type="date" max="01.01.2099"class="form-control" formControlName="dataVenda" placeholder="01/10/2024" required/>
+            <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('dataVenda', campos)">
+              <span *ngIf="form.get('dataVenda')?.hasError(validator.nome) && form.get('dataVenda')?.touched"> {{ validator.mensagemErro }}</span>
+            </div>
+        </div>
+        <div class="col-md-2 ">
+            <label for="inputTema" class="form-label">Total Venda</label>
+            <input class="form-control" formControlName="totalVenda" [readOnly]="true" currencyMask [options]="{ allowNegative: false , max: 9999.99}" placeholder="R$ 100,00" required />
+            <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('totalVenda', campos)">
+              <span *ngIf="form.get('totalVenda')?.hasError(validator.nome) && form.get('totalVenda')?.touched"> {{ validator.mensagemErro }}</span>
+            </div>
+          </div>
+      </div>
+      <div [class]="'box card m-auto p-2 my-3 ' + statusBox">
+        <div class="box-header with-border text-center" (click)="alterarStatusBox()">
+          <b class="box-title">Itens
+            <fa-icon [icon]="statusBox == '' ? caretup : carretDown"></fa-icon>
+          </b>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body my-2">
+          <div class="form">
+            <div [formGroup]="form">
+              <div formArrayName="itens" *ngFor="let itemForm of itensForms.controls; let i = index">
+                <fieldset [formGroupName]="i" class="form-group">
+                  <div class="row py-2">
+                  <div class="col-md-1">
+                    <label for="inputTema" class="form-label">Nº Item</label>
+                    <input type="text" class="form-control" readonly [value]="i"/>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="inputTema" class="form-label">Nome Produto</label>
+                    <input type="text" class="form-control" formControlName="nomeProduto" placeholder="Nome Produto" required/>
+                    <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('nomeProduto', camposItens)">
+                      <span *ngIf="itemForm.get('nomeProduto')?.hasError(validator.nome) && itemForm.get('nomeProduto')?.touched"> {{ validator.mensagemErro }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-2 ">
+                    <label for="inputTema" class="form-label">Quantidade</label>
+                    <input class="form-control" formControlName="quantidade" (blur)="calcularTotal(i)"
+                          currencyMask [options]="{prefix: '', allowNegative: false , max: 9999.99}" placeholder="1" required />
+                    <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('quantidade', camposItens)">
+                      <span *ngIf="itemForm.get('quantidade')?.hasError(validator.nome) && itemForm.get('quantidade')?.touched"> {{ validator.mensagemErro }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="inputTema" class="form-label">Valor Unitario</label>
+                    <input class="form-control" formControlName="vlUnitario" currencyMask (blur)="calcularTotal(i)" [options]="{ prefix: '',allowNegative: false , max: 9999.99}" placeholder="R$ 100.00" required />
+                    <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('vlUnitario', camposItens)">
+                      <span *ngIf="itemForm.get('vlUnitario')?.hasError(validator.nome) && itemForm.get('vlUnitario')?.touched"> {{ validator.mensagemErro }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="inputTema" class="form-label">Desconto</label>
+                    <input class="form-control" formControlName="desconto" currencyMask (blur)="calcularTotal(i)" [options]="{ allowNegative: false , max: 9999.99}" placeholder="R$ 100.00" required />
+                    <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('desconto', camposItens)">
+                      <span *ngIf="itemForm.get('desconto')?.hasError(validator.nome) && itemForm.get('desconto')?.touched"> {{ validator.mensagemErro }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="inputTema" class="form-label">Valor Total</label>
+                    <input class="form-control" formControlName="vlTotal" currencyMask [options]="{ allowNegative: false , max: 9999.99}" placeholder="R$ 100.00" required readonly  />
+                    <div class="invalid-feedback d-block" *ngFor="let validator of utilService.retornaValidators('vlTotal', camposItens)">
+                      <span *ngIf="itemForm.get('vlTotal')?.hasError(validator.nome) && itemForm.get('vlTotal')?.touched"> {{ validator.mensagemErro }}</span>
+                    </div>
+                  </div>
+                  <div class="col-md-1 align-self-end mb-1">
+                  - <button class="btn btn-primary btn-red" (click)="excluirItem(i)">
+                      <fa-icon [icon]="faTrash"></fa-icon>
+                    </button>
+                  </div>
+                </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+              <div class="pt-4 float-end mx-auto mt-2">
+              <button class="btn btn-primary py-1 float-right" (click)="addItem()">
+                <fa-icon [icon]="plus"></fa-icon>
+              </button>
+            </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="m-2 p-3">
+    <button class="btn btn-primary float-end"
+            (click)="utilService.validarFormulario(this.campos,this.form) && utilService.validarFormularioArray(this.camposItens,this.itensForms)
+         ? salvarAlteracoes() : ''">
+      &nbsp;Salvar Alterações</button>
+  </div>
+</div>

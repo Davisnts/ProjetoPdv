@@ -1,11 +1,10 @@
-import { Venda } from "./venda";
 
 export interface ItensVenda {
   id: number; //Chave primaria
   nomeProduto: string;
   quantidade: number;
-  vrUnitario: number;
+  vlUnitario: number;
   desconto: number;
-  vrTotal: number;
-  idVenda: Venda;
+  vlTotal: number;
+  idVenda: number;
 }

@@ -12,6 +12,8 @@ export class NavComponent implements OnInit {
   faHome = faHome;
   constructor() { }
 
+  isCollapsed = true;
+
   ngOnInit() {
   }
 

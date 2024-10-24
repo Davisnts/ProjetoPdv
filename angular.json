@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/projetorr",
+            "outputPath": "dist/projetoPdv",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -38,10 +38,12 @@
               }
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "@angular/material/prebuilt-themes/azure-blue.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "@ng-select/ng-select/themes/material.theme.css"
             ],
             "scripts": []
           },

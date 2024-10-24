@@ -19,15 +19,18 @@ import { ModalConfirmaçãoComponent } from './shared/utils/components/ModalConf
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ModalTemplateComponent } from './shared/utils/components/ModalTemplate/ModalTemplate.component';
 import { provideEnvironmentNgxCurrency, NgxCurrencyInputMode, NgxCurrencyDirective } from 'ngx-currency';
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { VendasDetalharComponent } from './components/vendas/vendas-detalhar/vendas-detalhar.component';
+import { NgLabelTemplateDirective, NgOptionTemplateDirective, NgSelectComponent } from '@ng-select/ng-select'
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     ClienteListaComponent,
-    VendasListaComponent,
     ClienteDetalharComponent,
+    VendasListaComponent,
+    VendasDetalharComponent,
     ModalConfirmaçãoComponent,
     ModalTemplateComponent,
   ],
@@ -40,10 +43,19 @@ import { provideEnvironmentNgxCurrency, NgxCurrencyInputMode, NgxCurrencyDirecti
     FormsModule,
     ReactiveFormsModule,
     MatMenuModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      maxOpened: 10,
+      preventDuplicates: true,
+      autoDismiss: true
+    }),
+    CollapseModule.forRoot(),
     NgxMaskDirective,
     NgxMaskPipe,
-    NgxCurrencyDirective
+    NgxCurrencyDirective,
+    BrowserAnimationsModule,
+    NgLabelTemplateDirective,
+    NgOptionTemplateDirective,
+    NgSelectComponent,
   ],
   providers: [
     provideAnimationsAsync(),

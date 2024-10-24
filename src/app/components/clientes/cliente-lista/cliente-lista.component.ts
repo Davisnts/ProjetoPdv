@@ -77,15 +77,12 @@ export class ClienteListaComponent implements OnInit {
         height: '50%',
         width: '60%',
         panelClass: 'full-screen-modal',
+        disableClose: true,
         data:{
           component: ClienteDetalharComponent,
           tituloModal: "Cadastrar Cliente",
         }
-      }).afterClosed().subscribe(
-        () => {
-          console.log("Componente")
-        }
-      );
+      });
   }
 
   detalharCliente(cliente:Cliente){
@@ -94,6 +91,7 @@ export class ClienteListaComponent implements OnInit {
         height: '50%',
         width: '60%',
         panelClass: 'full-screen-modal',
+        disableClose: true,
         data:{
           component: ClienteDetalharComponent,
           tituloModal: "Editar - Detalhar Cliente",
@@ -102,11 +100,12 @@ export class ClienteListaComponent implements OnInit {
       });
   }
 
-  abrirModalExcluirCliente(clienteId : any){
+  abrirModalExcluirCliente(clienteId : string){
     this.dialog.open(ModalConfirmaçãoComponent,{
       height: 'auto',
       width: 'auto',
       panelClass: 'full-screen-modal',
+      disableClose: true,
       data:{
         titulo : 'Excluir Cliente',
         mensagem: 'Deseja realmente excluir cliente?'
@@ -119,7 +118,7 @@ export class ClienteListaComponent implements OnInit {
     })
   }
 
-  excluirCliente(clienteId : any){
+  excluirCliente(clienteId : string){
     this.clienteService.excluirCliente(clienteId).subscribe({
       next:() => {
         this.toastr.success("Cliente excluido com sucesso!");

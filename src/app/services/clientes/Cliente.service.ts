@@ -37,7 +37,7 @@ public cadastrarCliente(cliente : Cliente) : Observable<any>{
 public editarCliente(cliente : Cliente, clienteId: number) : Observable<any>{
   return this.http.put<Cliente>(`${this.baseURL}/${clienteId}`,cliente);
 }
-public excluirCliente(clienteId : any) : Observable<any>{
+public excluirCliente(clienteId : string) : Observable<any>{
   return this.http.delete(`${this.baseURL}/${clienteId}`);
 }
 
